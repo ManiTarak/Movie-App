@@ -4,7 +4,6 @@ import NavBar from './NavBar';
 import MovieCard from './MovieCard';
 
 function App() {
-  console.log(data);
   return (
     <div className="App">
       <NavBar />
