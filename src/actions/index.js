@@ -1,7 +1,7 @@
-{
-    type:"ADD_MOVIES";
-    movies:[]
-}
-{
-    type:"Delete_Movie"
-}
+// {
+//     type:"ADD_MOVIES";
+//     movies:[]
+// }
+// {
+//     type:"Delete_Movie"
+// }
