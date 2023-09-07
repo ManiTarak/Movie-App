@@ -1,7 +1,7 @@
 import React from 'react';
-import { data } from '../data';
 import NavBar from './NavBar';
 import MovieCard from './MovieCard';
+import {AddingmoviesAction} from '../actions/index';
 
 class App extends React.Component {
   componentDidMount(){
@@ -10,10 +10,7 @@ class App extends React.Component {
       this.forceUpdate();
     }
     );
-    store.dispatch({
-      type:"ADD_MOVIES",
-      movies:data
-    });
+    store.dispatch(AddingmoviesAction());
   }
   render(){
     const movies=this.props.store.getState();
