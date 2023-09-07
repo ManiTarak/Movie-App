@@ -3,8 +3,21 @@ import { data } from '../data';
 import NavBar from './NavBar';
 import MovieCard from './MovieCard';
 
-function App() {
-  return (
+class App extends React.Component {
+  componentDidMount(){
+    const {store}=this.props;
+    store.subscribe(()=>{
+      this.forceUpdate();
+    }
+    );
+    store.dispatch({
+      type:"ADD_MOVIES",
+      movies:data
+    });
+  }
+  render(){
+    const movies=this.props.store.getState();
+    return (
     <div className="App">
       <NavBar />
       <div className="main">
@@ -13,14 +26,15 @@ function App() {
           <div className="tab">Favourites</div>
         </div>
           <div className="list">
-            {data.map(movie => (
+            {movies.map((movie,index) => (
               
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} key={`movies-${index}`}/>
             ))}
           </div>
         </div>
       </div>
   );
+  }
 }
 
 export default App;
