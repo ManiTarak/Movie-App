@@ -14,7 +14,7 @@ class App extends React.Component {
   }
   isFavourite=(movie)=>{
     const {store}=this.props;
-    if(store.getState().FavmovList.indexOf(movie)!=-1){
+    if(store.getState().movies.FavmovList.indexOf(movie)!=-1){
       return true;
     }
     return false;
@@ -25,7 +25,7 @@ class App extends React.Component {
     
   }
   render(){
-    const {movieslist,FavmovList,onFavouritesTab}=this.props.store.getState();
+    const {movieslist,FavmovList,onFavouritesTab}=this.props.store.getState().movies;
     const displaylist=onFavouritesTab?FavmovList:movieslist
     return (
     <div className="App">
