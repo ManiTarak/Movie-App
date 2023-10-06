@@ -6,13 +6,17 @@ import App from './components/App';
 import rootreducer from './reducers/index'
 import './index.css'
 
-const logger=function ({dispatch,getState}){
-  return function (next){
-    return function(action){
-      console.log("Action Type =  ",action.type);
-      next(action);
-    }
-  }
+// const logger=function ({dispatch,getState}){
+//   return function (next){
+//     return function(action){
+//       console.log("Action Type =  ",action.type);
+//       next(action);
+//     }
+//   }
+// }
+const logger=({dispatch,getState})=>(next)=>(action)=>{
+  console.log("Action Type =  ",action.type);
+  next(action);
 }
 const secondmiddleware=function ({dispatch,getState}){
   return function (next){
