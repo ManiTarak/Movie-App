@@ -30,11 +30,45 @@ const secondmiddleware=function ({dispatch,getState}){
 }
 const store=createStore(rootreducer,applyMiddleware(logger,thunk));
 export const storeContext=createContext();
+export function connect(callback){
+  return function (Component){
+    class ConnectedComponent extends React.Component{
+      constructor(props){
+        super(props);
+        this.props.store.subscribe(()=>{
+          console.log("this is in ;;;;; nenu telusukovali",this);
+          this.forceUpdate();
+        })
+
+      }
+      render(){
+        const {store}=this.props;
+        const dataTobePassed=callback(store.getState());
+        return(
+       <Component store={store} {...dataTobePassed} dispatch={store.dispatch}></Component>
+       ); 
+
+    }
+  }
+  return class ConnectedComponentWraper extends React.Component{
+    render(){
+      return(
+        <storeContext.Consumer>
+          {(store)=>{
+            return(<ConnectedComponent store={store}></ConnectedComponent>)
+          }}
+        </storeContext.Consumer>
+      )
+    }
+  }
+  }
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
   <storeContext.Provider value={store}>
-    <App />
+    <App store={store}/>
   </storeContext.Provider>
   </React.StrictMode>
 );

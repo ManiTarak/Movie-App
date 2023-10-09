@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from './NavBar';
 import MovieCard from './MovieCard';
 import {AddingmoviesAction, onTabClickactioncreator} from '../actions/index';
-import {storeContext} from "../index.js"
+import {storeContext,connect} from "../index.js"
 
 class App extends React.Component {
   componentDidMount(){
@@ -26,11 +26,11 @@ class App extends React.Component {
     
   }
   render(){
-    const {movieslist,FavmovList,onFavouritesTab}=this.props.store.getState().movies;
+    const {movieslist,FavmovList,onFavouritesTab}=this.props.movies;
     const displaylist=onFavouritesTab?FavmovList:movieslist
     return (
     <div className="App">
-      <NavBar store={this.props.store} dispatch={this.props.store.dispatch}/>
+      <NavBar store={this.props.store} dispatch={this.props.dispatch}/>
       <div className="main">
         <div className="tabs">
           <div className={`tab ${onFavouritesTab?'':'active-tabs'}`} onClick={()=>this.onTabclick(false)}>Movies</div>
@@ -48,18 +48,12 @@ class App extends React.Component {
   );
   }
 }
-class AppWrapper extends React.Component{
-  render(){
-    return (
-    <storeContext.Consumer>
-    {(store)=>{
-    return(
-      <App store={store}></App>
-    );
-    }
-    }
-    </storeContext.Consumer>
-    );
-    }
-  }
-export default AppWrapper;
+function callback(state){
+  return({
+    movies:state.movies,
+    search:state.search
+  });
+}
+const connectedAppComponent=connect(callback)(App);
+
+export default connectedAppComponent;
