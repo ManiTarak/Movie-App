@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {data} from '../data';
 import {handleMovieSearch,ADDtoMoviesAction} from '../actions';
 
@@ -22,8 +23,8 @@ class NavBar extends React.Component {
         this.props.dispatch(ADDtoMoviesAction(results));
     }
     render(){
-        const {showSearchResults}=this.props.store.getState().search;
-        const {results}=this.props.store.getState().search;
+        const {showSearchResults}=this.props.search;
+        const {results}=this.props.search;
         return (
             <div className="nav">
                 <div className='search-container'>
@@ -44,5 +45,10 @@ class NavBar extends React.Component {
         );
     }
 }
-
-export default NavBar;
+function mapStatetoProps(state){
+    return({
+     search:state.search
+    });
+}
+const ConnectNavBarComponent=connect(mapStatetoProps)(NavBar);
+export default ConnectNavBarComponent;

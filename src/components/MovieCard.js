@@ -3,12 +3,12 @@ import {AddingmoviestoFavourite,RemovemoviefromFavourites} from '../actions/inde
 
 class MovieCard extends React.Component{
     handleFavouriteClick=()=>{
-       const { movie,store }=this.props;
-       store.dispatch(AddingmoviestoFavourite(movie));
+       const { movie}=this.props;
+       this.props.dispatch(AddingmoviestoFavourite(movie));
     }
     handleUnFavouriteClick=()=>{
-        const { movie,store}=this.props;
-        store.dispatch(RemovemoviefromFavourites(movie));
+        const { movie}=this.props;
+        this.props.dispatch(RemovemoviefromFavourites(movie));
     }
     render (){
         const { movie,isFavourite } = this.props;
