@@ -34,7 +34,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
   <storeContext.Provider value={store}>
-    <App store={store}/>
+    <App />
   </storeContext.Provider>
   </React.StrictMode>
 );
