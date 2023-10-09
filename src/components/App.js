@@ -2,6 +2,7 @@ import React from 'react';
 import NavBar from './NavBar';
 import MovieCard from './MovieCard';
 import {AddingmoviesAction, onTabClickactioncreator} from '../actions/index';
+import {storeContext} from "../index"
 
 class App extends React.Component {
   componentDidMount(){
@@ -28,8 +29,11 @@ class App extends React.Component {
     const {movieslist,FavmovList,onFavouritesTab}=this.props.store.getState().movies;
     const displaylist=onFavouritesTab?FavmovList:movieslist
     return (
+      <storeContext.Consumer>
+        {(store)=>{
+          return (
     <div className="App">
-      <NavBar store={this.props.store} dispatch={this.props.store.dispatch}/>
+      <NavBar store={store} dispatch={store.dispatch}/>
       <div className="main">
         <div className="tabs">
           <div className={`tab ${onFavouritesTab?'':'active-tabs'}`} onClick={()=>this.onTabclick(false)}>Movies</div>
@@ -38,13 +42,18 @@ class App extends React.Component {
           <div className="list">
             {displaylist.map((movie,index) => (
               
-              <MovieCard movie={movie} store={this.props.store} isFavourite={this.isFavourite(movie)} key={`movies-${index}`}/>
+              <MovieCard movie={movie} store={store} isFavourite={this.isFavourite(movie)} key={`movies-${index}`}/>
             ))}
           </div>
           {displaylist.length==0?<h3>Not a movie selected as Favourite</h3>:null}
         </div>
       </div>
   );
+        }
+        }
+      </storeContext.Consumer>
+    );
+   
   }
 }
 

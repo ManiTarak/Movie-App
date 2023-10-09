@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import {createStore} from 'redux';
 import { applyMiddleware } from 'redux';
@@ -29,11 +29,13 @@ const secondmiddleware=function ({dispatch,getState}){
   }
 }
 const store=createStore(rootreducer,applyMiddleware(logger,thunk));
-
+export const storeContext=createContext();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <storeContext.Provider value={store}>
     <App store={store}/>
+  </storeContext.Provider>
   </React.StrictMode>
 );
 
