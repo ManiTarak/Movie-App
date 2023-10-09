@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_MOVIES } from '../actions/index';
+import { ADD_MOVIES,ADD_SEARCH_RESULT, ADD_TO_MOVIES} from '../actions/index';
 import { ADD_FAVOURITE ,ON_TAB_CLICK,REMOVE_FROM_FAV} from '../actions/index';
 //reducer functions are pure functions
 const InitialmoviesState = {
@@ -17,14 +17,28 @@ export  function movies(state = InitialmoviesState, action){
     }else if(action.type===REMOVE_FROM_FAV){
         const fav=state.FavmovList.filter((m)=>(m!=action.UnFavmovie));
         return({...state,FavmovList:fav});
+    }else if(action.type===ADD_TO_MOVIES){
+        return({...state,movieslist:[action.result,...state.movieslist]});
     }
 
     return state;
 }
 const InitialSearchState={
-    results:{}
+    results:{},
+    showSearchResults:false
 }
 export function search(state=InitialSearchState,action){
+    if(action.type===ADD_SEARCH_RESULT){
+        return {
+            ...state,results:action.movie,
+            showSearchResults:true
+        
+        }
+    }else if(action.type===ADD_TO_MOVIES){
+        return {
+          ...state,showSearchResults:false
+        }
+    }
     return state;
 }
 const InitialState={
